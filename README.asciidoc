@@ -48,7 +48,6 @@ projects.
 Now, let's say you want to compile your basic C hello world using
 P-Redo. Let's say you have an +hello.c+ like this:
 
-[source,c]
 ----
 #include <stdio.h>
 
@@ -61,7 +60,6 @@ int main(int argc, char **argv) {
 To compile it to an object file you should create a +default.c.o+ like
 this:
 
-[source,python,numbered]
 ----
 redo.if_changed(basename) <1>
 redo.utils.cmd(["gcc", "-c", "-o", basename + ".o", basename]) <2>
@@ -93,7 +91,6 @@ all the associated libraries to an executable. Instead of a default
 build-script I will use a specific one and create this +hello.do+
 script file:
 
-[source,python]
 ----
 redo.if_changed("hello.c.o")
 redo.utils.cmd("gcc -o hello hello.c.o")
