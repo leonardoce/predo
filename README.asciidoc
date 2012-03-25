@@ -81,12 +81,12 @@ The second line (<2>) says the command needed to compile the file.
 
 Let's try it using the +build+ subcommand:
 
-----
+---------------------
 $ redo.py build hello.c.o
   /home/leonardo/src/predo/t/t_02/hello.c.o
 $ ls hello.c.o
 hello.c.o
-----
+---------------------
 
 Wow! It seem to be working. Now I should link this object file with
 all the associated libraries to an executable. Instead of a default
