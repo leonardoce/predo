@@ -35,11 +35,11 @@ P-Redo mantains the dependency info in a Direct Acyclic Graph which is
 memorized on an internal database. So, first of all, you should create
 your database in your project main directory using:
 
-----
+---------------------
 $ redo.py init
 $ ls _redo.db
 _redo.db
-----
+---------------------
 
 This command will create a +_redo.db+ file which contains the initial
 database which will be populated with the dependencies in your
