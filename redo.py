@@ -77,7 +77,7 @@ class Graph(object):
         else:
             if idx_t2 not in deplist:
                 deplist.append(idx_t2)
-n
+
     def clear_dependency_info_for(self, t):
         """
         This method will remove all the arcs from "t"
