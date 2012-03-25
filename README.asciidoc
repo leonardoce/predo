@@ -88,4 +88,38 @@ $ ls hello.c.o
 hello.c.o
 ----
 
-Wow! It seem to be working.
+Wow! It seem to be working. Now I should link this object file with
+all the associated libraries to an executable. Instead of a default
+build-script I will use a specific one and create this +hello.do+
+script file:
+
+[source,python]
+----
+redo.if_changed("hello.c.o")
+redo.utils.cmd("gcc -o hello hello.c.o")
+----
+
+At this point, the meaning of the script should be obvious. The target
+must be rebuild when the +hello.c.o+ file changes and the second line
+it's simply the command needed to link it. Let's try:
+
+----
+$ redo.py build hello
+  /home/leonardo/src/predo/t/t_02/hello
+$ ./hello
+This is a simple test.
+$ 
+----
+
+It seems to be ok. As you see P-Redo hasn't rebuild hello.c.o file
+because if was already build.
+
+If I need I could also use P-Redo to clean all the generated files:
+
+----
+$ redo.py clean
+Cleaning /home/leonardo/src/predo/t/t_02/hello.c.o
+Cleaning /home/leonardo/src/predo/t/t_02/hello
+$ 
+----
+
