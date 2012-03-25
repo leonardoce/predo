@@ -1,0 +1,11 @@
+P-Redo Build System
+===================
+Leonardo Cecchi <leonardoce@interfree.it>
+
+Introduction
+------------
+
+This is a simple build system inspired by DJB redo (http://cr.yp.to/redo.html).
+
+It's a build system on which you can work with pleasure on Linux and Windows
+and it's implemented using Python3. 
