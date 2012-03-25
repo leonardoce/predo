@@ -5,12 +5,87 @@ Leonardo Cecchi <leonardoce@interfree.it>
 Introduction
 ------------
 
-This is a simple build system inspired by DJB redo (http://cr.yp.to/redo.html).
+This is a simple build system inspired by DJB Redo (http://cr.yp.to/redo.html):
+DJB Redo is driven by shell scripts and P-Redo is driven by Python scripts.
 
-It's a build system on which you can work with pleasure on Linux and Windows
-and it's implemented using Python3. 
+This build system will make you work with pleasure on Windows and on Linux.
+
+
+Prerequisite
+------------
+
+* Python 3.1 or better
 
 License
 -------
 
 This software is released under the simplified BSD license.
+
+
+Installing
+----------
+
+To install P-Redo all you have to do is put it somewhere on the PATH
+and then you are set.
+
+Tutorial
+--------
+
+P-Redo mantains the dependency info in a Direct Acyclic Graph which is
+memorized on an internal database. So, first of all, you should create
+your database in your project main directory using:
+
+----
+$ redo.py init
+$ ls _redo.db
+_redo.db
+----
+
+This command will create a +_redo.db+ file which contains the initial
+database which will be populated with the dependencies in your
+projects.
+
+Now, let's say you want to compile your basic C hello world using
+P-Redo. Let's say you have an +hello.c+ like this:
+
+[source,c]
+----
+#include <stdio.h>
+
+int main(int argc, char **argv) {
+  printf("This is a simple test.\n");
+  return 0;
+}
+----
+
+To compile it to an object file you should create a +default.c.o+ like
+this:
+
+[source,python,numbered]
+----
+redo.if_changed(basename) <1>
+redo.utils.cmd(["gcc", "-c", "-o", basename + ".o", basename]) <2>
+----
+
+The +default.c.o+ will be applied when a file like +a.c.o+ is needed
+by the build system.
+
+This little script basically says, on <1>, that this same script has
+to be re-executed when the source code has changed. To cite the
+filename the script uses the predefined variable +basename+ which is
+the basename the name of the target being processed without the last
+extension so, if you are building +hello.c.o+ the basename will be
++hello.c+.
+
+The second line (<2>) says the command needed to compile the file.
+
+Let's try it using the +build+ subcommand:
+
+----
+$ redo.py build hello.c.o
+  /home/leonardo/src/predo/t/t_02/hello.c.o
+$ ls hello.c.o
+hello.c.o
+----
+
+Wow! It seem to be working.
