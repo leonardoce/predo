@@ -108,7 +108,7 @@ This is a simple test.
 $ 
 ----
 
-It seems to be ok. As you see P-Redo hasn't rebuild hello.c.o file
+It seems to be ok. As you see P-Redo hasn't rebuild +hello.c.o+ file
 because if was already build.
 
 If I need I could also use P-Redo to clean all the generated files:
@@ -120,3 +120,30 @@ Cleaning /home/leonardo/src/predo/t/t_02/hello
 $ 
 ----
 
+We haven't considered yet the dependencies from the header files,
+which are a bit of trouble for +make+, because there actually depends
+from the header files used in your source files. We can use the +-M+
+flag of the GNU compiler:
+
+----
+$ gcc -M hello.c
+hello.o: hello.c \
+ c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/stdio.h \
+ c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/_mingw.h \
+ c:\mingw\bin\../lib/gcc/mingw32/4.6.2/include/stddef.h \
+ c:\mingw\bin\../lib/gcc/mingw32/4.6.2/include/stdarg.h \
+ c:\mingw\bin\../lib/gcc/mingw32/4.6.2/../../../../include/sys/types.h
+
+$
+----
+
+and use this output to populate the dependency graph using the
+predefined P-Redo functions modifying +default.c.o" 
+
+----
+redo.utils.cmd(["gcc", "-c", "-o", basename + ".o", basename])
+deps_string = redo.utils.cmd_output(["gcc", "-M", basename])
+deps = redo.utils.parse_makefile_dependency(deps_string)
+deps.append (basename)
+redo.if_changed(*deps)
+----
