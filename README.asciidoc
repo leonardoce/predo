@@ -138,7 +138,7 @@ $
 ----
 
 and use this output to populate the dependency graph using the
-predefined P-Redo functions modifying +default.c.o" 
+predefined P-Redo functions modifying +default.c.o+:
 
 ----
 redo.utils.cmd(["gcc", "-c", "-o", basename + ".o", basename])
@@ -147,3 +147,4 @@ deps = redo.utils.parse_makefile_dependency(deps_string)
 deps.append (basename)
 redo.if_changed(*deps)
 ----
+
