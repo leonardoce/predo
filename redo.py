@@ -702,7 +702,12 @@ def main_argparse():
     parameters = parser.parse_args(sys.argv[1:])
     
     # Configuring the logging subsystem
-    get_logging_subsystem().configure_from_logging_level(parameters.logging_level[0])
+    if type(parameters.logging_level)==type([]):
+        log_level = parameters.logging_level[0]
+    else:
+        log_level = parameters.logging_level
+
+    get_logging_subsystem().configure_from_logging_level(log_level)
     
     # Invoke the right command
     if parameters.command_name == "init":
