@@ -401,7 +401,7 @@ class Utilities(object):
           if linea not in dipendenze:
             dipendenze.append(linea)
     	
-          return dipendenze
+        return dipendenze
         
     def find_files(self, directory, pattern):
         """
