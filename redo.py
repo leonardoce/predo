@@ -678,7 +678,7 @@ def main_clean():
     redo.clean()
     redo.write_status_to_file(dbname)
 
-def main_graph():
+def main_tgf():
     redo = Redo()
     dbname = find_redo_database()
     redo.read_status_from_file(dbname)
