@@ -1,4 +1,5 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
+from __future__ import print_function
 import argparse
 import doctest
 import fnmatch
@@ -400,9 +401,21 @@ class Utilities(object):
           linea = linea.replace("\\\\", "\\")
           if linea not in dipendenze:
             dipendenze.append(linea)
-    	
+
         return dipendenze
-        
+
+    def parse_ocamldep_output(self, depOutput, extension):
+        """
+        This function will parse the output of the OcamlDep -modules call.
+        For example (extension=".cmi"):
+
+        mytest.ml: One Two Three ---> ["one.cmi", "two.cmi", "three.cmi"]
+        """
+
+        if type(depOutput)==type(b""): depOutput = depOutput.decode("utf-8")
+        if depOutput.find("\n")!=-1: depOutput = depOutput[0:depOutput.find("\n")].strip()
+        return list(map(lambda x: x.strip().lower() + extension, depOutput.split(" ")[1:]))
+
     def find_files(self, directory, pattern):
         """
         Kinda-glob but recursive
